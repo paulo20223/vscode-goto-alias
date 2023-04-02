@@ -5,17 +5,17 @@
   "publisher": "paulo20223",
   "packageManager": "pnpm@7.0.1",
   "description": "Go to definition following alias for nuxt",
-  "homepage": "https://github.com/antfu/vscode-goto-alias#readme",
+  "homepage": "https://github.com/paulo20223/vscode-goto-alias#readme",
   "bugs": {
     "url": "https://github.com/antfu/vscode-goto-alias/issues"
   },
   "license": "MIT",
-  "author": "Anthony Fu <paulo090798@gmail.com>",
+  "author": "Paulo20223 <paulo090798@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antfu/vscode-goto-alias"
+    "url": "https://github.com/paulo20223/vscode-goto-alias"
   },
-  "funding": "https://github.com/sponsors/antfu",
+  "funding": "https://github.com/sponsors/paulo20223",
   "main": "./dist/index.js",
   "files": [
     "dist"
