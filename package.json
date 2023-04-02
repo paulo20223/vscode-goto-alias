@@ -1,16 +1,16 @@
 {
-  "name": "goto-alias",
-  "displayName": "Goto definition alias",
+  "name": "nuxt-goto-alias",
+  "displayName": "Nuxt definition alias",
   "version": "0.1.0",
-  "publisher": "antfu",
+  "publisher": "paulo20223",
   "packageManager": "pnpm@7.0.1",
-  "description": "Go to definition following alias redirections",
+  "description": "Go to definition following alias for nuxt",
   "homepage": "https://github.com/antfu/vscode-goto-alias#readme",
   "bugs": {
     "url": "https://github.com/antfu/vscode-goto-alias/issues"
   },
   "license": "MIT",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "author": "Anthony Fu <paulo090798@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/antfu/vscode-goto-alias"
