@@ -1,12 +1,10 @@
 import type { TextDocument } from 'vscode'
 import { Position, Selection, commands, languages, window } from 'vscode'
+import { setTimeout } from "timers/promises";
 
-// TODO: config
-const CLOSE_DTS_TAB = false
 
 export function activate() {
-  let triggerDoc: TextDocument | undefined
-  let lastDoc: TextDocument | undefined
+  let goToFile: TextDocument | undefined
 
   languages.registerDefinitionProvider([
     'javascript',
@@ -16,8 +14,7 @@ export function activate() {
     'vue',
   ], {
     provideDefinition(document: TextDocument) {
-      // record the last document triggers the "goto definition"
-      triggerDoc = document
+      goToFile = document
       return null
     },
   })
@@ -27,20 +24,17 @@ export function activate() {
       return
 
     const fn = async () => {
-      if (!e.selection.isSingleLine)
-        return
 
-      // to check if this editor change is triggered by "goto definition"
-      if (!triggerDoc || triggerDoc !== lastDoc)
-        return
-
-      // we only handles redirection to dts file
       const path = e.document.uri.fsPath
-      if (!path.endsWith('.d.ts'))
-        return
 
-      // wait for e.selection to update (init 0)
+      if (goToFile && path.endsWith('components.d.ts')) {
+        goToFile = undefined
+      } else {
+        return
+      }
+
       await Promise.resolve()
+      await setTimeout(100);
 
       const line = e.document.lineAt(e.selection.anchor.line)
       const text = line.text
@@ -49,7 +43,6 @@ export function activate() {
       if (!match)
         return
 
-      // select the import name and trigger "goto definition" again
       e.selection = new Selection(
         new Position(
           e.selection.anchor.line,
@@ -60,21 +53,13 @@ export function activate() {
           match.index! + match[0].length + 1,
         ),
       )
-      const tab = window.tabGroups.activeTabGroup.activeTab
-      triggerDoc = undefined
       await commands.executeCommand('editor.action.goToDeclaration')
-      if (CLOSE_DTS_TAB && tab && tab !== window.tabGroups.activeTabGroup.activeTab)
-        await window.tabGroups.close(tab)
+
     }
 
     await fn()
     await Promise.resolve()
-    lastDoc = window.activeTextEditor?.document
   })
-
-  setTimeout(() => {
-    lastDoc = window.activeTextEditor?.document
-  }, 100)
 }
 
 export function deactivate() {
